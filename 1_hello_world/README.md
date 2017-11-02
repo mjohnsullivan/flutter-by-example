@@ -1,6 +1,6 @@
 # hello_world
 
-A new Flutter project.
+Hello world for Flutter
 
 ## Getting Started
 
