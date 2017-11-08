@@ -5,8 +5,6 @@
 import 'package:flutter/widgets.dart';
 
 void main() {
-    runApp(
-      new Directionality(textDirection: TextDirection.ltr,
-        child: new Center(
-          child: new Text('Hello World!'))));
+    runApp(const Center(
+      child: const Text('Hello World!', textDirection: TextDirection.ltr)));
 }

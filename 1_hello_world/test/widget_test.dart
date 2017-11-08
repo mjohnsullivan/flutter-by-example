@@ -11,9 +11,9 @@ void main() {
   testWidgets('"Hello world!" is shown', (WidgetTester tester) async {
 
     await tester.pumpWidget(
-      new Directionality(textDirection: TextDirection.ltr,
-        child: new Center(
-          child: new Text('Hello World!')))
+      const Center(
+        child: const Text('Hello World!', textDirection: TextDirection.ltr)
+      )
     );
 
     // Expect "Hello World!" to be displayed
