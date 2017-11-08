@@ -5,6 +5,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
 
 1. __Hello World__: one-line Flutter app
 2. __Material Navigation__: two screen Flutter that demonstrates navigation using Material
+3. __TextField__: example of a simple single-line text field and a multi-line text field with a submit button
 
 ## Flutter Docs
 
