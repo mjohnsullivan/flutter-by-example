@@ -37,6 +37,7 @@ class SingleLineTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext content) {
     return new TextField(
+      autocorrect: false, // turns off auto-correct
       decoration: new InputDecoration(
         hintText: 'Enter text; return submits',
       ),

@@ -9,6 +9,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
 4. __HTTP__: fetching text and images over http
 5. __Layouts__: example widget Layouts
 6. __Lists__: example list view
+7. __Stacks__: how to render widgets at set positions in a stack
 
 ## Flutter Docs
 
