@@ -11,6 +11,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
 6. __Lists__: example list view
     * (6.1) Dynamic lists: create a dynamic (infinite) list with dividers 
 7. __Stacks__: how to render widgets at set positions in a stack
+8. __Inherited Widgets__: how to use inherited widgets to pass data down a widget tree
 
 ## Flutter Docs
 
