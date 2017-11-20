@@ -27,11 +27,11 @@ class FirstScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('First Screen'),
+        title: const Text('First Screen'),
       ),
       body: new Center(
         child: new RaisedButton(
-          child: new Text('Go to Second'),
+          child: const Text('Go to Second'),
           onPressed: () {
             // Pushs the SecondScreen widget onto the navigation stack
             Navigator.of(context).push(new MaterialPageRoute<Null>(
@@ -53,7 +53,7 @@ class SecondScreen extends StatelessWidget {
       ),
       body: new Center(
         child: new RaisedButton(
-          child: new Text('Go to First'),
+          child: const Text('Go to First'),
           // Pops Second Screen off the navigation stack
           onPressed: () => Navigator.of(context).pop(),
         ),
