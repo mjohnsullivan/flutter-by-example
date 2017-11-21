@@ -13,7 +13,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
     * (6.1) __Dynamic lists__: create a dynamic (infinite) list with dividers 
 7. __Stacks__: how to render widgets at set positions in a stack
 8. __Inherited Widgets__: how to use inherited widgets to pass data down a widget tree
-9. __i18n__: simple example of i18n support in Flutter (coming shortly!)
+9. __i18n__: simple example of i18n support in Flutter
 10. __Driver Testing__: a simple demonstration driver test
 
 ## Flutter Docs
