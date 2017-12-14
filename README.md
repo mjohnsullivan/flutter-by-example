@@ -15,6 +15,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
 8. __Inherited Widgets__: how to use inherited widgets to pass data down a widget tree
 9. __i18n__: simple example of i18n support in Flutter
 10. __Driver Testing__: a simple demonstration driver test
+11. __JSON Parsing__: parses a JSON network response
 
 ## Flutter Docs
 
