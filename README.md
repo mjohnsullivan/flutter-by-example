@@ -17,6 +17,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
 10. __Driver Testing__: a simple demonstration driver test
 11. __JSON Parsing__: parses a JSON network response
 12. __Streams__: handle state updates using streams
+    * (12.1) __StreamBuilder__: handle state updates using StreamBuilder
 
 ## Flutter Docs
 
