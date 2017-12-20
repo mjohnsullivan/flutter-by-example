@@ -77,11 +77,14 @@ class UserListState extends State<UserListPage> {
 final jsonEndpoint = 'https://jsonplaceholder.typicode.com/users';
 
 class User {
-  User(this.name, this.userName, this.address);
-
   final String name;
   final String userName;
   final Address address;
+
+  User.fromJsonMap(Map jsonMap) :
+    name = jsonMap['name'],
+    userName = jsonMap['username'],
+    address = new Address.fromJsonMap(jsonMap['address']);
 
   String toString() {
     return 'name: $name\nuser name: $userName\naddress: $address';
@@ -89,12 +92,16 @@ class User {
 }
 
 class Address {
-  Address(this.street, this.suite, this.city, this.zipcode);
-
   final String street;
   final String suite;
   final String city;
   final String zipcode;
+
+  Address.fromJsonMap(Map jsonMap) :
+    street = jsonMap['street'],
+    suite = jsonMap['suite'],
+    city = jsonMap['city'],
+    zipcode = jsonMap['zipcode'];
 
   String toString() {
     return '$street, $suite, $city, $zipcode';
@@ -108,16 +115,7 @@ Future<List<User>> fetchAndParseUsers() async {
   var userList = <User>[];
   parsedUserList.forEach((parsedUser) {
     userList.add(
-      new User(
-        parsedUser['name'],
-        parsedUser['username'],
-        new Address(
-          parsedUser['address']['street'],
-          parsedUser['address']['suite'],
-          parsedUser['address']['city'],
-          parsedUser['address']['zipcode'],
-        ),
-      )
+      new User.fromJsonMap(parsedUser)
     );
   });
   return userList;
