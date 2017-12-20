@@ -79,9 +79,9 @@ final jsonEndpoint = 'https://jsonplaceholder.typicode.com/users';
 class User {
   User(this.name, this.userName, this.address);
 
-  String name;
-  String userName;
-  Address address;
+  final String name;
+  final String userName;
+  final Address address;
 
   String toString() {
     return 'name: $name\nuser name: $userName\naddress: $address';
@@ -91,10 +91,10 @@ class User {
 class Address {
   Address(this.street, this.suite, this.city, this.zipcode);
 
-  String street;
-  String suite;
-  String city;
-  String zipcode;
+  final String street;
+  final String suite;
+  final String city;
+  final String zipcode;
 
   String toString() {
     return '$street, $suite, $city, $zipcode';
