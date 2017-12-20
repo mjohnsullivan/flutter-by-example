@@ -18,6 +18,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
 11. __JSON Parsing__: parses a JSON network response
 12. __Streams__: handle state updates using streams
     * (12.1) __StreamBuilder__: handle state updates using StreamBuilder
+    * (12.2) __RxDart__: handle state updates using StreamBuilder with Observables
 
 ## Flutter Docs
 
