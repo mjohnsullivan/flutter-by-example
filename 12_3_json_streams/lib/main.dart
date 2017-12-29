@@ -33,7 +33,6 @@ class ListExamplePage extends StatefulWidget {
 
 class ListExamplePageState extends State<ListExamplePage> {
   StreamController<Photo> photoStreamController;
-  Stream<Photo> photoStream;
   var photoList = <Photo>[];
 
   @override
@@ -41,8 +40,6 @@ class ListExamplePageState extends State<ListExamplePage> {
     super.initState();
     photoStreamController = new StreamController<Photo>.broadcast();
     
-    photoStream = photoStreamController.stream;
-  
     // Listen for photos
     photoStreamController.stream.listen(
       (photo) => setState(() => photoList.add(photo))
