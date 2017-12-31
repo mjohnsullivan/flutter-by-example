@@ -20,6 +20,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
     * (12.1) __StreamBuilder__: handle state updates using StreamBuilder
     * (12.2) __RxDart__: handle state updates using StreamBuilder with Observables
     * (12.3) __JSON with Streams__: HTTP and JSON parsing using streams
+13. __Bottom Nav Bar__: Simple bottom nav bar implementation, using Stack and OffStage
 
 ## Flutter Docs
 
