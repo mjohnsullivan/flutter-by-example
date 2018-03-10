@@ -21,6 +21,7 @@ A collection of simple, bare-bones Flutter apps that each demonstrate a concept
     * (12.2) __RxDart__: handle state updates using StreamBuilder with Observables
     * (12.3) __JSON with Streams__: HTTP and JSON parsing using streams
 13. __Bottom Nav Bar__: Simple bottom nav bar implementation, using Stack and OffStage
+14. __Custom Painter__: implements a basic bar chart using a custom painter
 
 ## Flutter Docs
 
