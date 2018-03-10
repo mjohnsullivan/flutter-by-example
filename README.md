@@ -1,9 +1,11 @@
 # flutter-by-example
 A collection of simple, bare-bones Flutter apps that each demonstrate a concept
 
+The apps are slowly being updated to Dart 2; be sure to use the __--preview-dart-2__ flag when running/compiling these examples
+
 ## Apps
 
-1. __Hello World__: one-line Flutter app
+1. __Hello World__: one-line Flutter app __Updated for Dart 2__
 2. __Material Navigation__: two screen Flutter that demonstrates navigation using Material
     * (2.1) __Routing with data__: passing data between navigation routes
 3. __TextField__: example of a simple single-line text field and a multi-line text field with a submit button
