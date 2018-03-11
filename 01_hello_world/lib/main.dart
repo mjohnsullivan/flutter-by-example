@@ -5,14 +5,14 @@
 import 'package:flutter/widgets.dart';
 
 /*
-TextDirection is also a widget, so the following also works:
+There's a Directionality widget, so the following also works:
 
 runApp(Directionality(
   textDirection: TextDirection.ltr,
   child: Center(
-      child: Text(
-    'Hello World',
-  ))));
+    child: Text('Hello World')
+  )
+));
 */
 void main() {
   runApp(Center(child: Text('Hello World!', textDirection: TextDirection.ltr)));
