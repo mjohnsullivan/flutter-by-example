@@ -17,6 +17,18 @@ void main() {
     );
 
     // Expect "Hello World!" to be displayed
-    expect(find.text('Hello World!'), findsOneWidget);
+    expect(find.text('Hello World!!'), findsOneWidget);
+  });
+
+  testWidgets('A dummy test', (WidgetTester tester) async {
+
+    await tester.pumpWidget(
+      const Center(
+        child: const Text('Hello World!', textDirection: TextDirection.ltr)
+      )
+    );
+
+    // Expect "Hello World!" to be displayed
+    expect(find.text('Hello World2!'), findsOneWidget);
   });
 }
