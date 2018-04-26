@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
 
 class Provider extends StatefulWidget {
-  Provider({data, this.child}) : data = new ValueNotifier(data);
+  Provider({initialValue, this.updater, this.child}) : data = new ValueNotifier(initialValue);
 
   final ValueNotifier data;
   final Widget child;
+  final Function(dynamic) updater;
 
   static of(BuildContext context) =>
       (context.inheritFromWidgetOfExactType(_InheritedProvider)
@@ -25,6 +26,13 @@ class _ProviderState extends State<Provider> {
 
   // Wrap setState in a function so the listener can be disposed
   didValueChange() => setState(() {});
+
+  update(value) {
+    setState(() {
+      final currentValue = widget.data.value;
+      widget.data.value = widget.updater(currentValue);
+    });
+  }
 
   @override
   Widget build(BuildContext context) => new _InheritedProvider(

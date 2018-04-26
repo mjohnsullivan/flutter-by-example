@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     // Wrap the widget tree in a Provider
     return new Provider(
       // Set the initial state of the counter
-      data: 0,
+      initialValue: 0,
       child: new MaterialApp(
         title: 'InhertiedWidget with ValueNotifier Example',
         theme: new ThemeData(
