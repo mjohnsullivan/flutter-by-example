@@ -1,11 +1,12 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class WavyPic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new ClipPath(
-      child: new CoffeePic(),
-      clipper: new BottomWaveClipper(),
+    return ClipPath(
+      child: CoffeePic(),
+      //child: Container(height: 100.0, color: Color(0x88888888)),
+      clipper: BottomWaveClipper(),
     );
   }
 }

@@ -2,18 +2,18 @@ import 'package:bezier/lines.dart';
 import 'package:bezier/wavypic.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new HomePage(),
+      home: HomePage(),
     );
   }
 }
@@ -21,9 +21,25 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: new Text('Painting Tests')),
-      body: new Examples(),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        title: Text('Painting Tests'),
+      ),
+      body: Examples(),
+    );
+  }
+}
+
+class CurvedContainer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 4.0,
+      child: ClipPath(
+        child: Container(height: 50.0, color: Theme.of(context).primaryColor),
+        clipper: BottomWaveClipper(),
+      ),
     );
   }
 }
@@ -31,15 +47,19 @@ class HomePage extends StatelessWidget {
 class Examples extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          new Container(width: 100.0, height: 100.0, child: new LinePatterns()),
-          new WavyPic(),
-        ],
-      ),
+    return Column(
+      children: [
+        CurvedContainer(),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(width: 100.0, height: 100.0, child: LinePatterns()),
+              WavyPic(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
