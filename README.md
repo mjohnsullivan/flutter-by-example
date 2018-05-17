@@ -24,6 +24,7 @@ The apps are slowly being updated to Dart 2; be sure to use the __--preview-dart
     * (12.3) __JSON with Streams__: HTTP and JSON parsing using streams
 13. __Bottom Nav Bar__: Simple bottom nav bar implementation, using Stack and OffStage
 14. __Custom Painter__: implements a basic bar chart using a custom painter
+15. __Tabs__: tabbed pages demo
 
 ## Flutter Docs
 
