@@ -32,7 +32,7 @@ class Panels extends StatelessWidget {
     return Backdrop(
       frontPanel: FrontPanel(),
       backPanel: BackPanel(
-        toggleFrontPanel: frontPanelVisible,
+        frontPanelOpen: frontPanelVisible,
       ),
       frontTitle: Text('Front Panel'),
       backTitle: Text('Back Panel'),
@@ -47,13 +47,30 @@ class Panels extends StatelessWidget {
 class FrontPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Hello world'));
+    return Container(
+        color: Theme.of(context).cardColor,
+        child: Center(child: Text('Hello world')));
   }
 }
 
-class BackPanel extends StatelessWidget {
-  BackPanel({@required this.toggleFrontPanel});
-  final ValueNotifier<bool> toggleFrontPanel;
+class BackPanel extends StatefulWidget {
+  BackPanel({@required this.frontPanelOpen});
+  final ValueNotifier<bool> frontPanelOpen;
+
+  @override
+  createState() => _BackPanelState();
+}
+
+class _BackPanelState extends State<BackPanel> {
+  bool panelOpen;
+
+  @override
+  initState() {
+    super.initState();
+    panelOpen = widget.frontPanelOpen.value;
+    widget.frontPanelOpen.addListener(
+        () => setState(() => panelOpen = widget.frontPanelOpen.value));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +78,13 @@ class BackPanel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Center(child: Text('Top of Panel')),
+          Center(
+              child: Text('Front panel is ${panelOpen ? "open" : "closed"}')),
           Center(
               child: FlatButton(
             child: Text('Tap Me'),
             onPressed: () {
-              print('Toggling value: ${toggleFrontPanel.value}');
-              toggleFrontPanel.value = true;
+              widget.frontPanelOpen.value = true;
             },
           )),
           // will not be seen; covered by front panel

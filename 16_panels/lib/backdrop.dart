@@ -21,6 +21,7 @@ class _BackdropPanel extends StatelessWidget {
     this.title,
     this.child,
     this.titleHeight,
+    this.padding,
   }) : super(key: key);
 
   final VoidCallback onTap;
@@ -29,41 +30,45 @@ class _BackdropPanel extends StatelessWidget {
   final Widget title;
   final Widget child;
   final double titleHeight;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 12.0,
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(16.0),
-        topRight: Radius.circular(16.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onVerticalDragUpdate: onVerticalDragUpdate,
-            onVerticalDragEnd: onVerticalDragEnd,
-            onTap: onTap,
-            child: Container(
-              color: Theme.of(context).primaryColor,
-              height: titleHeight,
-              padding: EdgeInsetsDirectional.only(start: 16.0),
-              alignment: AlignmentDirectional.centerStart,
-              child: DefaultTextStyle(
-                style: Theme.of(context).textTheme.subhead,
-                child: title,
+    return Padding(
+      padding: padding,
+      child: Material(
+        elevation: 12.0,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onVerticalDragUpdate: onVerticalDragUpdate,
+              onVerticalDragEnd: onVerticalDragEnd,
+              onTap: onTap,
+              child: Container(
+                color: Theme.of(context).primaryColor,
+                height: titleHeight,
+                padding: EdgeInsetsDirectional.only(start: 16.0),
+                alignment: AlignmentDirectional.centerStart,
+                child: DefaultTextStyle(
+                  style: Theme.of(context).textTheme.subhead,
+                  child: title,
+                ),
               ),
             ),
-          ),
-          Divider(
-            height: 1.0,
-          ),
-          Expanded(
-            child: child,
-          ),
-        ],
+            Divider(
+              height: 1.0,
+            ),
+            Expanded(
+              child: child,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -83,6 +88,7 @@ class Backdrop extends StatefulWidget {
   final Widget frontHeader;
   final double backPanelHeight;
   final double frontPanelClosedHeight;
+  final EdgeInsets frontPanelPadding;
   final ValueNotifier<bool> panelVisible;
 
   Backdrop(
@@ -92,6 +98,7 @@ class Backdrop extends StatefulWidget {
       @required this.backTitle,
       this.backPanelHeight = 0.0,
       this.frontPanelClosedHeight = 48.0,
+      this.frontPanelPadding = const EdgeInsets.all(0.0),
       this.panelVisible,
       this.frontHeader})
       : assert(frontPanel != null),
@@ -111,7 +118,6 @@ class _BackdropState extends State<Backdrop>
   @override
   void initState() {
     super.initState();
-    print('In initState');
     _controller = AnimationController(
       duration: Duration(milliseconds: 300),
       // value of 0 hides the panel; value of 1 fully shows the panel
@@ -120,10 +126,8 @@ class _BackdropState extends State<Backdrop>
     );
 
     // Listen on the toggle value notifier if it's not null
-    widget.panelVisible?.addListener(() {
-      if (widget.panelVisible.value != _backdropPanelVisible)
-        _toggleBackdropPanelVisibility();
-    });
+
+    widget.panelVisible?.addListener(_subscribeToValueNotifier);
 
     // Ensure that the value notifier is updated when the panel is opened or closed
     if (widget.panelVisible != null) {
@@ -134,6 +138,19 @@ class _BackdropState extends State<Backdrop>
           widget.panelVisible.value = false;
       });
     }
+  }
+
+  void _subscribeToValueNotifier() {
+    if (widget.panelVisible.value != _backdropPanelVisible)
+      _toggleBackdropPanelVisibility();
+  }
+
+  /// didUpdateWidget is required for resubscribing when hot reload occurs
+  @override
+  void didUpdateWidget(Backdrop oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    oldWidget.panelVisible.removeListener(_subscribeToValueNotifier);
+    widget.panelVisible.addListener(_subscribeToValueNotifier);
   }
 
   @override
@@ -204,6 +221,7 @@ class _BackdropState extends State<Backdrop>
                   title: widget.frontHeader,
                   titleHeight: panelTitleHeight,
                   child: widget.frontPanel,
+                  padding: widget.frontPanelPadding,
                 ),
               ),
             ],
