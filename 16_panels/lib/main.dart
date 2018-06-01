@@ -25,20 +25,19 @@ class MyHomePage extends StatelessWidget {
 }
 
 class Panels extends StatelessWidget {
-  final toggleFrontPanel = ValueNotifier<bool>(false);
+  final frontPanelVisible = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
     return Backdrop(
       frontPanel: FrontPanel(),
       backPanel: BackPanel(
-        toggleFrontPanel: toggleFrontPanel,
+        toggleFrontPanel: frontPanelVisible,
       ),
       frontTitle: Text('Front Panel'),
       backTitle: Text('Back Panel'),
       frontHeader: Text('Give me a tap'),
-      initialVisibility: false,
-      toggleFrontPanel: toggleFrontPanel,
+      panelVisible: frontPanelVisible,
       backPanelHeight: 40.0,
       frontPanelClosedHeight: 48.0,
     );
@@ -66,7 +65,10 @@ class BackPanel extends StatelessWidget {
           Center(
               child: FlatButton(
             child: Text('Tap Me'),
-            onPressed: () => toggleFrontPanel.value = true,
+            onPressed: () {
+              print('Toggling value: ${toggleFrontPanel.value}');
+              toggleFrontPanel.value = true;
+            },
           )),
           // will not be seen; covered by front panel
           Center(child: Text('Bottom of Panel')),

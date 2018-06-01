@@ -81,20 +81,18 @@ class Backdrop extends StatefulWidget {
   final Widget frontTitle;
   final Widget backTitle;
   final Widget frontHeader;
-  final bool initialVisibility;
   final double backPanelHeight;
   final double frontPanelClosedHeight;
-  final ValueNotifier<bool> toggleFrontPanel;
+  final ValueNotifier<bool> panelVisible;
 
-  const Backdrop(
+  Backdrop(
       {@required this.frontPanel,
       @required this.backPanel,
       @required this.frontTitle,
       @required this.backTitle,
-      this.initialVisibility = true,
       this.backPanelHeight = 0.0,
       this.frontPanelClosedHeight = 48.0,
-      this.toggleFrontPanel,
+      this.panelVisible,
       this.frontHeader})
       : assert(frontPanel != null),
         assert(backPanel != null),
@@ -113,56 +111,44 @@ class _BackdropState extends State<Backdrop>
   @override
   void initState() {
     super.initState();
+    print('In initState');
     _controller = AnimationController(
       duration: Duration(milliseconds: 300),
       // value of 0 hides the panel; value of 1 fully shows the panel
-      value: widget.initialVisibility ? 1.0 : 0.0,
+      value: (widget.panelVisible?.value ?? true) ? 1.0 : 0.0,
       vsync: this,
     );
 
     // Listen on the toggle value notifier if it's not null
-    widget.toggleFrontPanel?.addListener(() {
-      if (widget.toggleFrontPanel.value) {
+    widget.panelVisible?.addListener(() {
+      if (widget.panelVisible.value != _backdropPanelVisible)
         _toggleBackdropPanelVisibility();
-        widget.toggleFrontPanel.value = false;
-      }
     });
-  }
 
-  /*
-  @override
-  void didUpdateWidget(Backdrop old) {
-    super.didUpdateWidget(old);
-    if (false) {
-      setState(() {
-        _controller.fling(
-            velocity:
-                _backdropPanelVisible ? -_kFlingVelocity : _kFlingVelocity);
-      });
-    } else if (!_backdropPanelVisible) {
-      setState(() {
-        _controller.fling(velocity: _kFlingVelocity);
+    // Ensure that the value notifier is updated when the panel is opened or closed
+    if (widget.panelVisible != null) {
+      _controller.addStatusListener((status) {
+        if (status == AnimationStatus.completed)
+          widget.panelVisible.value = true;
+        else if (status == AnimationStatus.dismissed)
+          widget.panelVisible.value = false;
       });
     }
   }
-  */
 
   @override
   void dispose() {
     _controller.dispose();
+    widget.panelVisible?.dispose();
     super.dispose();
   }
 
-  bool get _backdropPanelVisible {
-    final AnimationStatus status = _controller.status;
-    return status == AnimationStatus.completed ||
-        status == AnimationStatus.forward;
-  }
+  bool get _backdropPanelVisible =>
+      _controller.status == AnimationStatus.completed ||
+      _controller.status == AnimationStatus.forward;
 
-  void _toggleBackdropPanelVisibility() {
-    _controller.fling(
-        velocity: _backdropPanelVisible ? -_kFlingVelocity : _kFlingVelocity);
-  }
+  void _toggleBackdropPanelVisibility() => _controller.fling(
+      velocity: _backdropPanelVisible ? -_kFlingVelocity : _kFlingVelocity);
 
   double get _backdropHeight {
     final RenderBox renderBox = _backdropKey.currentContext.findRenderObject();
