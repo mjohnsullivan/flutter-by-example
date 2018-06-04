@@ -73,20 +73,16 @@ class Panels extends StatelessWidget {
 
 class FrontPanel1 extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Theme.of(context).cardColor,
-        child: Center(child: Text('First panel')));
-  }
+  Widget build(BuildContext context) => Container(
+      color: Theme.of(context).cardColor,
+      child: Center(child: Text('First panel')));
 }
 
 class FrontPanel2 extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Theme.of(context).cardColor,
-        child: Center(child: Text('Second panel')));
-  }
+  Widget build(BuildContext context) => Container(
+      color: Theme.of(context).cardColor,
+      child: Center(child: Text('Second panel')));
 }
 
 /// This needs to be a stateful widget in order to display which front panel is open

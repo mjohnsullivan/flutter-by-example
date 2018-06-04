@@ -188,8 +188,8 @@ class _BackdropState extends State<Backdrop>
   }
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
+  Widget build(BuildContext context) =>
+      LayoutBuilder(builder: (context, constraints) {
         final panelSize = constraints.biggest;
         final closedPercentage =
             (panelSize.height - widget.frontPanelClosedHeight) /
