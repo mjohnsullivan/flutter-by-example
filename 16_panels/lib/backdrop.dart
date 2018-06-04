@@ -139,7 +139,7 @@ class _BackdropState extends State<Backdrop>
       _toggleBackdropPanelVisibility();
   }
 
-  /// didUpdateWidget is required for resubscribing when hot reload occurs
+  /// Required for resubscribing when hot reload occurs
   @override
   void didUpdateWidget(Backdrop oldWidget) {
     super.didUpdateWidget(oldWidget);
