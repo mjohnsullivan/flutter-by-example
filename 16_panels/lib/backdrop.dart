@@ -83,8 +83,6 @@ class _BackdropPanel extends StatelessWidget {
 class Backdrop extends StatefulWidget {
   final Widget frontPanel;
   final Widget backPanel;
-  final Widget frontTitle;
-  final Widget backTitle;
   final Widget frontHeader;
   final double backPanelHeight;
   final double frontPanelClosedHeight;
@@ -94,17 +92,13 @@ class Backdrop extends StatefulWidget {
   Backdrop(
       {@required this.frontPanel,
       @required this.backPanel,
-      @required this.frontTitle,
-      @required this.backTitle,
       this.backPanelHeight = 0.0,
       this.frontPanelClosedHeight = 48.0,
       this.frontPanelPadding = const EdgeInsets.all(0.0),
       this.panelVisible,
       this.frontHeader})
       : assert(frontPanel != null),
-        assert(backPanel != null),
-        assert(frontTitle != null),
-        assert(backTitle != null);
+        assert(backPanel != null);
 
   @override
   createState() => _BackdropState();
