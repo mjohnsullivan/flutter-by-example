@@ -84,7 +84,7 @@ class Backdrop extends StatefulWidget {
   final Widget frontPanel;
   final Widget backPanel;
   final Widget frontHeader;
-  final double backPanelHeight;
+  final double frontPanelOpenHeight;
   final double frontPanelClosedHeight;
   final EdgeInsets frontPanelPadding;
   final ValueNotifier<bool> panelVisible;
@@ -92,7 +92,7 @@ class Backdrop extends StatefulWidget {
   Backdrop(
       {@required this.frontPanel,
       @required this.backPanel,
-      this.backPanelHeight = 0.0,
+      this.frontPanelOpenHeight = 0.0,
       this.frontPanelClosedHeight = 48.0,
       this.frontPanelPadding = const EdgeInsets.all(0.0),
       this.panelVisible,
@@ -143,8 +143,8 @@ class _BackdropState extends State<Backdrop>
   @override
   void didUpdateWidget(Backdrop oldWidget) {
     super.didUpdateWidget(oldWidget);
-    oldWidget.panelVisible.removeListener(_subscribeToValueNotifier);
-    widget.panelVisible.addListener(_subscribeToValueNotifier);
+    oldWidget.panelVisible?.removeListener(_subscribeToValueNotifier);
+    widget.panelVisible?.addListener(_subscribeToValueNotifier);
   }
 
   @override
@@ -190,15 +190,15 @@ class _BackdropState extends State<Backdrop>
   @override
   Widget build(BuildContext context) => LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-        final panelTitleHeight = widget.frontPanelClosedHeight;
         final panelSize = constraints.biggest;
-        final panelTop = panelSize.height - panelTitleHeight;
+        final closedPercentage =
+            (panelSize.height - widget.frontPanelClosedHeight) /
+                panelSize.height;
+        final openPercentage = widget.frontPanelOpenHeight / panelSize.height;
 
-        // Animate the front panel sliding up and down
-        Animation<RelativeRect> panelAnimation = RelativeRectTween(
-          begin: RelativeRect.fromLTRB(
-              0.0, panelTop, 0.0, panelTop - panelSize.height),
-          end: RelativeRect.fromLTRB(0.0, widget.backPanelHeight, 0.0, 0.0),
+        final panelDetailsPosition = Tween<Offset>(
+          begin: Offset(0.0, closedPercentage),
+          end: Offset(0.0, openPercentage),
         ).animate(_controller.view);
 
         return Container(
@@ -206,14 +206,14 @@ class _BackdropState extends State<Backdrop>
           child: Stack(
             children: <Widget>[
               widget.backPanel,
-              PositionedTransition(
-                rect: panelAnimation,
+              SlideTransition(
+                position: panelDetailsPosition,
                 child: _BackdropPanel(
                   onTap: _toggleBackdropPanelVisibility,
                   onVerticalDragUpdate: _handleDragUpdate,
                   onVerticalDragEnd: _handleDragEnd,
                   title: widget.frontHeader,
-                  titleHeight: panelTitleHeight,
+                  titleHeight: widget.frontPanelClosedHeight,
                   child: widget.frontPanel,
                   padding: widget.frontPanelPadding,
                 ),
