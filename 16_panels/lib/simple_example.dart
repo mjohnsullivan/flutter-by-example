@@ -25,7 +25,8 @@ class Panels extends StatelessWidget {
       frontHeader: Text('Give me a tap'),
       panelVisible: frontPanelVisible,
       frontPanelOpenHeight: 40.0,
-      frontPanelClosedHeight: 48.0,
+      frontHeaderHeight: 48.0,
+      frontHeaderVisibleClosed: true,
     );
   }
 }

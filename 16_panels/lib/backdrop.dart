@@ -33,45 +33,43 @@ class _BackdropPanel extends StatelessWidget {
   final EdgeInsets padding;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: Material(
-        elevation: 12.0,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.0),
-          topRight: Radius.circular(16.0),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onVerticalDragUpdate: onVerticalDragUpdate,
-              onVerticalDragEnd: onVerticalDragEnd,
-              onTap: onTap,
-              child: Container(
-                color: Theme.of(context).primaryColor,
-                height: titleHeight,
-                padding: EdgeInsetsDirectional.only(start: 16.0),
-                alignment: AlignmentDirectional.centerStart,
-                child: DefaultTextStyle(
-                  style: Theme.of(context).textTheme.subhead,
-                  child: title,
+  Widget build(BuildContext context) => Padding(
+        padding: padding,
+        child: Material(
+          elevation: 12.0,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16.0),
+            topRight: Radius.circular(16.0),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onVerticalDragUpdate: onVerticalDragUpdate,
+                onVerticalDragEnd: onVerticalDragEnd,
+                onTap: onTap,
+                child: Container(
+                  color: Theme.of(context).primaryColor,
+                  height: titleHeight,
+                  padding: EdgeInsetsDirectional.only(start: 16.0),
+                  alignment: AlignmentDirectional.centerStart,
+                  child: DefaultTextStyle(
+                    style: Theme.of(context).textTheme.subhead,
+                    child: title,
+                  ),
                 ),
               ),
-            ),
-            Divider(
-              height: 1.0,
-            ),
-            Expanded(
-              child: child,
-            ),
-          ],
+              Divider(
+                height: 1.0,
+              ),
+              Expanded(
+                child: child,
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 /// Builds a Backdrop.
@@ -85,7 +83,8 @@ class Backdrop extends StatefulWidget {
   final Widget backPanel;
   final Widget frontHeader;
   final double frontPanelOpenHeight;
-  final double frontPanelClosedHeight;
+  final double frontHeaderHeight;
+  final bool frontHeaderVisibleClosed;
   final EdgeInsets frontPanelPadding;
   final ValueNotifier<bool> panelVisible;
 
@@ -93,8 +92,9 @@ class Backdrop extends StatefulWidget {
       {@required this.frontPanel,
       @required this.backPanel,
       this.frontPanelOpenHeight = 0.0,
-      this.frontPanelClosedHeight = 48.0,
+      this.frontHeaderHeight = 48.0,
       this.frontPanelPadding = const EdgeInsets.all(0.0),
+      this.frontHeaderVisibleClosed = true,
       this.panelVisible,
       this.frontHeader})
       : assert(frontPanel != null),
@@ -191,9 +191,9 @@ class _BackdropState extends State<Backdrop>
   Widget build(BuildContext context) =>
       LayoutBuilder(builder: (context, constraints) {
         final panelSize = constraints.biggest;
-        final closedPercentage =
-            (panelSize.height - widget.frontPanelClosedHeight) /
-                panelSize.height;
+        final closedPercentage = widget.frontHeaderVisibleClosed
+            ? (panelSize.height - widget.frontHeaderHeight) / panelSize.height
+            : 1.0;
         final openPercentage = widget.frontPanelOpenHeight / panelSize.height;
 
         final panelDetailsPosition = Tween<Offset>(
@@ -213,7 +213,7 @@ class _BackdropState extends State<Backdrop>
                   onVerticalDragUpdate: _handleDragUpdate,
                   onVerticalDragEnd: _handleDragEnd,
                   title: widget.frontHeader,
-                  titleHeight: widget.frontPanelClosedHeight,
+                  titleHeight: widget.frontHeaderHeight,
                   child: widget.frontPanel,
                   padding: widget.frontPanelPadding,
                 ),

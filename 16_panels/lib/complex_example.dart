@@ -65,7 +65,7 @@ class Panels extends StatelessWidget {
             frontHeader: model.panelTitle,
             panelVisible: frontPanelVisible,
             frontPanelOpenHeight: 40.0,
-            frontPanelClosedHeight: 48.0,
+            frontHeaderHeight: 48.0,
           ),
     );
   }
@@ -130,6 +130,7 @@ class _BackPanelState extends State<BackPanel> {
           )),
           Center(
               child: ScopedModelDescendant<FrontPanelModel>(
+            rebuildOnChange: false,
             builder: (context, _, model) => FlatButton(
                   child: Text('show first panel'),
                   onPressed: () {
