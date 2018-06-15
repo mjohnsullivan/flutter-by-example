@@ -58,8 +58,8 @@ class Panels extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<FrontPanelModel>(
       builder: (context, _, model) => Backdrop(
-            frontPanel: model.activePanel,
-            backPanel: BackPanel(
+            frontLayer: model.activePanel,
+            backLayer: BackPanel(
               frontPanelOpen: frontPanelVisible,
             ),
             frontHeader: model.panelTitle,
@@ -131,7 +131,7 @@ class _BackPanelState extends State<BackPanel> {
           Center(
               child: ScopedModelDescendant<FrontPanelModel>(
             rebuildOnChange: false,
-            builder: (context, _, model) => FlatButton(
+            builder: (context, _, model) => RaisedButton(
                   child: Text('show first panel'),
                   onPressed: () {
                     model.activate(FrontPanels.firstPanel);
@@ -142,7 +142,7 @@ class _BackPanelState extends State<BackPanel> {
           Center(
               child: ScopedModelDescendant<FrontPanelModel>(
             rebuildOnChange: false,
-            builder: (context, _, model) => FlatButton(
+            builder: (context, _, model) => RaisedButton(
                   child: Text('show second panel'),
                   onPressed: () {
                     model.activate(FrontPanels.secondPanel);
@@ -151,7 +151,7 @@ class _BackPanelState extends State<BackPanel> {
                 ),
           )),
           Center(
-              child: FlatButton(
+              child: RaisedButton(
             child: Text('show current panel'),
             onPressed: () {
               widget.frontPanelOpen.value = true;

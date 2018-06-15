@@ -79,8 +79,8 @@ class _BackdropPanel extends StatelessWidget {
 /// can make a selection. The user can also configure the titles for when the
 /// front or back panel is showing.
 class Backdrop extends StatefulWidget {
-  final Widget frontPanel;
-  final Widget backPanel;
+  final Widget frontLayer;
+  final Widget backLayer;
   final Widget frontHeader;
   final double frontPanelOpenHeight;
   final double frontHeaderHeight;
@@ -89,16 +89,16 @@ class Backdrop extends StatefulWidget {
   final ValueNotifier<bool> panelVisible;
 
   Backdrop(
-      {@required this.frontPanel,
-      @required this.backPanel,
+      {@required this.frontLayer,
+      @required this.backLayer,
       this.frontPanelOpenHeight = 0.0,
       this.frontHeaderHeight = 48.0,
       this.frontPanelPadding = const EdgeInsets.all(0.0),
       this.frontHeaderVisibleClosed = true,
       this.panelVisible,
       this.frontHeader})
-      : assert(frontPanel != null),
-        assert(backPanel != null);
+      : assert(frontLayer != null),
+        assert(backLayer != null);
 
   @override
   createState() => _BackdropState();
@@ -205,7 +205,7 @@ class _BackdropState extends State<Backdrop>
           key: _backdropKey,
           child: Stack(
             children: <Widget>[
-              widget.backPanel,
+              widget.backLayer,
               SlideTransition(
                 position: panelDetailsPosition,
                 child: _BackdropPanel(
@@ -214,7 +214,7 @@ class _BackdropState extends State<Backdrop>
                   onVerticalDragEnd: _handleDragEnd,
                   title: widget.frontHeader,
                   titleHeight: widget.frontHeaderHeight,
-                  child: widget.frontPanel,
+                  child: widget.frontLayer,
                   padding: widget.frontPanelPadding,
                 ),
               ),

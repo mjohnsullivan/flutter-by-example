@@ -18,8 +18,8 @@ class Panels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Backdrop(
-      frontPanel: FrontPanel(),
-      backPanel: BackPanel(
+      frontLayer: FrontPanel(),
+      backLayer: BackPanel(
         frontPanelOpen: frontPanelVisible,
       ),
       frontHeader: Text('Give me a tap'),
@@ -83,7 +83,7 @@ class _BackPanelState extends State<BackPanel> {
             child: Text('Front panel is ${panelOpen ? "open" : "closed"}'),
           )),
           Center(
-              child: FlatButton(
+              child: RaisedButton(
             child: Text('Tap Me'),
             onPressed: () {
               widget.frontPanelOpen.value = true;
