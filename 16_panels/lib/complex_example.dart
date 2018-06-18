@@ -16,26 +16,24 @@ class FrontPanelModel extends Model {
 
   FrontPanels get activePanelType => _activePanel;
 
-  Widget get panelTitle {
-    switch (_activePanel) {
-      case FrontPanels.firstPanel:
-        return Text('First Panel');
-      case FrontPanels.secondPanel:
-        return Text('Second Panel');
-      default:
-        return Text('Unknown');
-    }
+  Widget panelTitle(BuildContext context) {
+    return Container(
+      color: _activePanel == FrontPanels.firstPanel ? Colors.teal : Colors.lime,
+      padding: EdgeInsetsDirectional.only(start: 16.0),
+      alignment: AlignmentDirectional.centerStart,
+      child: DefaultTextStyle(
+        style: Theme.of(context).textTheme.subhead,
+        child: _activePanel == FrontPanels.firstPanel
+            ? Text('Teal Panel')
+            : Text('Lime Panel'),
+      ),
+    );
   }
 
   Widget get activePanel {
-    switch (_activePanel) {
-      case FrontPanels.firstPanel:
-        return FrontPanel1();
-      case FrontPanels.secondPanel:
-        return FrontPanel2();
-      default:
-        return FrontPanel1();
-    }
+    return _activePanel == FrontPanels.firstPanel
+        ? FrontPanel1()
+        : FrontPanel2();
   }
 
   void activate(FrontPanels panel) {
@@ -62,7 +60,7 @@ class Panels extends StatelessWidget {
             backLayer: BackPanel(
               frontPanelOpen: frontPanelVisible,
             ),
-            frontHeader: model.panelTitle,
+            frontHeader: model.panelTitle(context),
             panelVisible: frontPanelVisible,
             frontPanelOpenHeight: 40.0,
             frontHeaderHeight: 48.0,
@@ -73,16 +71,14 @@ class Panels extends StatelessWidget {
 
 class FrontPanel1 extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Container(
-      color: Theme.of(context).cardColor,
-      child: Center(child: Text('First panel')));
+  Widget build(BuildContext context) =>
+      Container(color: Colors.teal, child: Center(child: Text('Teal panel')));
 }
 
 class FrontPanel2 extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Container(
-      color: Theme.of(context).cardColor,
-      child: Center(child: Text('Second panel')));
+  Widget build(BuildContext context) =>
+      Container(color: Colors.lime, child: Center(child: Text('Lime panel')));
 }
 
 /// This needs to be a stateful widget in order to display which front panel is open

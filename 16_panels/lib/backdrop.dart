@@ -33,43 +33,36 @@ class _BackdropPanel extends StatelessWidget {
   final EdgeInsets padding;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: padding,
-        child: Material(
-          elevation: 12.0,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.0),
-            topRight: Radius.circular(16.0),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onVerticalDragUpdate: onVerticalDragUpdate,
-                onVerticalDragEnd: onVerticalDragEnd,
-                onTap: onTap,
-                child: Container(
-                  color: Theme.of(context).primaryColor,
-                  height: titleHeight,
-                  padding: EdgeInsetsDirectional.only(start: 16.0),
-                  alignment: AlignmentDirectional.centerStart,
-                  child: DefaultTextStyle(
-                    style: Theme.of(context).textTheme.subhead,
-                    child: title,
-                  ),
-                ),
-              ),
-              Divider(
-                height: 1.0,
-              ),
-              Expanded(
-                child: child,
-              ),
-            ],
-          ),
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: Material(
+        elevation: 12.0,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
         ),
-      );
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onVerticalDragUpdate: onVerticalDragUpdate,
+              onVerticalDragEnd: onVerticalDragEnd,
+              onTap: onTap,
+              child: Container(height: titleHeight, child: title),
+            ),
+            Divider(
+              height: 1.0,
+            ),
+            Expanded(
+              child: child,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 /// Builds a Backdrop.
@@ -188,38 +181,39 @@ class _BackdropState extends State<Backdrop>
   }
 
   @override
-  Widget build(BuildContext context) =>
-      LayoutBuilder(builder: (context, constraints) {
-        final panelSize = constraints.biggest;
-        final closedPercentage = widget.frontHeaderVisibleClosed
-            ? (panelSize.height - widget.frontHeaderHeight) / panelSize.height
-            : 1.0;
-        final openPercentage = widget.frontPanelOpenHeight / panelSize.height;
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      final panelSize = constraints.biggest;
+      final closedPercentage = widget.frontHeaderVisibleClosed
+          ? (panelSize.height - widget.frontHeaderHeight) / panelSize.height
+          : 1.0;
+      final openPercentage = widget.frontPanelOpenHeight / panelSize.height;
 
-        final panelDetailsPosition = Tween<Offset>(
-          begin: Offset(0.0, closedPercentage),
-          end: Offset(0.0, openPercentage),
-        ).animate(_controller.view);
+      final panelDetailsPosition = Tween<Offset>(
+        begin: Offset(0.0, closedPercentage),
+        end: Offset(0.0, openPercentage),
+      ).animate(_controller.view);
 
-        return Container(
-          key: _backdropKey,
-          child: Stack(
-            children: <Widget>[
-              widget.backLayer,
-              SlideTransition(
-                position: panelDetailsPosition,
-                child: _BackdropPanel(
-                  onTap: _toggleBackdropPanelVisibility,
-                  onVerticalDragUpdate: _handleDragUpdate,
-                  onVerticalDragEnd: _handleDragEnd,
-                  title: widget.frontHeader,
-                  titleHeight: widget.frontHeaderHeight,
-                  child: widget.frontLayer,
-                  padding: widget.frontPanelPadding,
-                ),
+      return Container(
+        key: _backdropKey,
+        child: Stack(
+          children: <Widget>[
+            widget.backLayer,
+            SlideTransition(
+              position: panelDetailsPosition,
+              child: _BackdropPanel(
+                onTap: _toggleBackdropPanelVisibility,
+                onVerticalDragUpdate: _handleDragUpdate,
+                onVerticalDragEnd: _handleDragEnd,
+                title: widget.frontHeader,
+                titleHeight: widget.frontHeaderHeight,
+                child: widget.frontLayer,
+                padding: widget.frontPanelPadding,
               ),
-            ],
-          ),
-        );
-      });
+            ),
+          ],
+        ),
+      );
+    });
+  }
 }

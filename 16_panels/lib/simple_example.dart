@@ -22,11 +22,24 @@ class Panels extends StatelessWidget {
       backLayer: BackPanel(
         frontPanelOpen: frontPanelVisible,
       ),
-      frontHeader: Text('Give me a tap'),
+      frontHeader: FrontPanelTitle(),
       panelVisible: frontPanelVisible,
       frontPanelOpenHeight: 40.0,
       frontHeaderHeight: 48.0,
       frontHeaderVisibleClosed: true,
+    );
+  }
+}
+
+class FrontPanelTitle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16.0, left: 16.0),
+      child: Text(
+        'Tap Me',
+        style: Theme.of(context).textTheme.subhead,
+      ),
     );
   }
 }
