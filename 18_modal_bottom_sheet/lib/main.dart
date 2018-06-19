@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       home: ScopedModel(
           model: IncrementValueModel(1),
-          child: MyHomePage(title: 'ModalRoute Demo')),
+          child: MyHomePage(title: 'Modal Bottom Sheet Demo')),
     );
   }
 }

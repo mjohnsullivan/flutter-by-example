@@ -6,25 +6,23 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Bottom Nav Demo',
-      theme: new ThemeData(
-        primarySwatch: Colors.deepOrange,
-      ),
-      // home: new BottomNavigationDemo(),
-      home: new BottomNavExample()
-    );
+    return MaterialApp(
+        title: 'Flutter Bottom Nav Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.deepOrange,
+        ),
+        home: BottomNavExample());
   }
 }
 
 class BottomNavExample extends StatefulWidget {
   @override
-  BottomNavExampleState createState() => new BottomNavExampleState();
+  createState() => BottomNavExampleState();
 }
 
 class BottomNavExampleState extends State<BottomNavExample> {
@@ -32,44 +30,99 @@ class BottomNavExampleState extends State<BottomNavExample> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: new Stack(
-        children: <Widget>[
-          // OffStage widgets can be hidden
-          new Offstage(
-            offstage: index != 0,
-            child: new Container(
-              child: new Center(
-                child: new Text('Left',
-                style: Theme.of(context).textTheme.display2)
-              )
+    return Scaffold(
+      body: Body('Index: $index'),
+      bottomNavigationBar: TwoItemBottomNavBar(
+        index: index,
+        callback: (newIndex) => setState(
+              () => this.index = newIndex,
             ),
-          ),
-          new Offstage(
-            offstage: index != 1,
-            child: new Container(
-              child: new Center(
-                child: new Text('Right',
-                style: Theme.of(context).textTheme.display2)
-              )
-            ),
-          ),
-        ],
       ),
-      bottomNavigationBar: new BottomNavigationBar(
-        currentIndex: index,
-        onTap: (int index) => setState(() => this.index = index),
-        items: <BottomNavigationBarItem>[
-          new BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Left'),
-          ),
-          new BottomNavigationBarItem(
-            icon: new Icon(Icons.search),
-            title: new Text('Right'),
-          ),
-        ],
+    );
+  }
+}
+
+class Body extends StatelessWidget {
+  Body(this.text);
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.display2,
+        ),
       ),
+    );
+  }
+}
+
+class TwoItemBottomNavBar extends StatelessWidget {
+  TwoItemBottomNavBar({this.index, this.callback});
+  final int index;
+  final Function(int) callback;
+
+  @override
+  Widget build(BuildContext context) {
+    /// BottomNavigationBar is automatically set to type 'fixed'
+    /// when there are three of less items
+    return BottomNavigationBar(
+      currentIndex: index,
+      onTap: callback,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text('First'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          title: Text('Second'),
+        ),
+      ],
+    );
+  }
+}
+
+class FiveItemBottomNavBar extends StatelessWidget {
+  FiveItemBottomNavBar({this.index, this.callback});
+  final int index;
+  final Function(int) callback;
+
+  @override
+  Widget build(BuildContext context) {
+    /// BottomNavigationBar is automatically set to type 'shifting'
+    /// when there are more than three items. This renders the items in white
+    return BottomNavigationBar(
+      currentIndex: index,
+      onTap: callback,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text('First'),
+          backgroundColor: Colors.teal,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          title: Text('Second'),
+          backgroundColor: Colors.pink,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          title: Text('Third'),
+          backgroundColor: Colors.amber,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          title: Text('Fourth'),
+          backgroundColor: Colors.indigo,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          title: Text('Fifth'),
+          backgroundColor: Colors.lime,
+        )
+      ],
     );
   }
 }
