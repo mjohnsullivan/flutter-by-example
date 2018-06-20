@@ -24,6 +24,10 @@ class IncrementValueModel extends Model {
     _counter += _incrementValue;
     notifyListeners();
   }
+
+  /// Wraps [ModelFinder.of] for this [Model]. See [ModelFinder.of] for more
+  static IncrementValueModel of(BuildContext context) =>
+      ModelFinder<IncrementValueModel>().of(context);
 }
 
 class MyApp extends StatelessWidget {
@@ -67,13 +71,12 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: ScopedModelDescendant<IncrementValueModel>(
-        rebuildOnChange: false,
-        builder: (context, _, model) => FloatingActionButton(
-              onPressed: model.increment,
-              tooltip: 'Increment',
-              child: Icon(Icons.add),
-            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          IncrementValueModel.of(context).increment();
+        },
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomBar(),
