@@ -25,7 +25,7 @@ class IncrementValueModel extends Model {
     notifyListeners();
   }
 
-  /// Wraps [ModelFinder.of] for this [Model]. See [ModelFinder.of] for more
+  /// Wraps [ModelFinder.of] for this [Model]
   static IncrementValueModel of(BuildContext context) =>
       ModelFinder<IncrementValueModel>().of(context);
 }
@@ -71,6 +71,20 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
+      // Below is an alternative way of accessing the model in instances
+      // where the widget doesn't care when the model is updated
+      // (i.e. the widget doesn't rebuild when the model's data changes).
+      //
+      // Another way of doing this is using the rebuildOnChange flag
+      // e.g.
+      //  floatingActionButton: ScopedModelDescendant<IncrementValueModel>(
+      //    rebuildOnChange: false,
+      //    builder: (context, _, model) => FloatingActionButton(
+      //          onPressed: model.increment,
+      //          tooltip: 'Increment',
+      //          child: Icon(Icons.add),
+      //        ),
+      //  ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           IncrementValueModel.of(context).increment();
