@@ -193,6 +193,7 @@ class _BackdropState extends State<Backdrop>
         final panelTitleHeight = widget.frontPanelClosedHeight;
         final panelSize = constraints.biggest;
         final panelTop = panelSize.height - panelTitleHeight;
+        // final panelTop = panelSize.height;
 
         // Animate the front panel sliding up and down
         Animation<RelativeRect> panelAnimation = RelativeRectTween(
