@@ -15,6 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         theme: panelTheme,
         title: 'Panels Demo',
-        home: ComplexExample(),
+        home: SimpleExample(),
       );
 }

@@ -7,7 +7,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'backdrop.dart';
 
 /// tracks what can be displayed in the front panel
-enum FrontPanels { firstPanel, secondPanel }
+enum FrontPanels { tealPanel, limePanel }
 
 /// Tracks which front panel should be displayed
 class FrontPanelModel extends Model {
@@ -16,27 +16,22 @@ class FrontPanelModel extends Model {
 
   FrontPanels get activePanelType => _activePanel;
 
-  Widget get panelTitle {
-    switch (_activePanel) {
-      case FrontPanels.firstPanel:
-        return Text('First Panel');
-      case FrontPanels.secondPanel:
-        return Text('Second Panel');
-      default:
-        return Text('Unknown');
-    }
+  Widget panelTitle(BuildContext context) {
+    return Container(
+      color: _activePanel == FrontPanels.tealPanel ? Colors.teal : Colors.lime,
+      padding: EdgeInsetsDirectional.only(start: 16.0),
+      alignment: AlignmentDirectional.centerStart,
+      child: DefaultTextStyle(
+        style: Theme.of(context).textTheme.subhead,
+        child: _activePanel == FrontPanels.tealPanel
+            ? Text('Teal Panel')
+            : Text('Lime Panel'),
+      ),
+    );
   }
 
-  Widget get activePanel {
-    switch (_activePanel) {
-      case FrontPanels.firstPanel:
-        return FrontPanel1();
-      case FrontPanels.secondPanel:
-        return FrontPanel2();
-      default:
-        return FrontPanel1();
-    }
-  }
+  Widget get activePanel =>
+      _activePanel == FrontPanels.tealPanel ? TealPanel() : LimePanel();
 
   void activate(FrontPanels panel) {
     _activePanel = panel;
@@ -47,7 +42,7 @@ class FrontPanelModel extends Model {
 class ComplexExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ScopedModel(
-      model: FrontPanelModel(FrontPanels.firstPanel),
+      model: FrontPanelModel(FrontPanels.tealPanel),
       child: Scaffold(body: SafeArea(child: Panels())));
 }
 
@@ -58,35 +53,29 @@ class Panels extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<FrontPanelModel>(
       builder: (context, _, model) => Backdrop(
-            frontPanel: model.activePanel,
-            backPanel: BackPanel(
+            frontLayer: model.activePanel,
+            backLayer: BackPanel(
               frontPanelOpen: frontPanelVisible,
             ),
-            frontHeader: model.panelTitle,
+            frontHeader: model.panelTitle(context),
             panelVisible: frontPanelVisible,
-            backPanelHeight: 40.0,
-            frontPanelClosedHeight: 48.0,
+            frontPanelOpenHeight: 40.0,
+            frontHeaderHeight: 48.0,
           ),
     );
   }
 }
 
-class FrontPanel1 extends StatelessWidget {
+class TealPanel extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Theme.of(context).cardColor,
-        child: Center(child: Text('First panel')));
-  }
+  Widget build(BuildContext context) =>
+      Container(color: Colors.teal, child: Center(child: Text('Teal panel')));
 }
 
-class FrontPanel2 extends StatelessWidget {
+class LimePanel extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Theme.of(context).cardColor,
-        child: Center(child: Text('Second panel')));
-  }
+  Widget build(BuildContext context) =>
+      Container(color: Colors.lime, child: Center(child: Text('Lime panel5')));
 }
 
 /// This needs to be a stateful widget in order to display which front panel is open
@@ -134,26 +123,30 @@ class _BackPanelState extends State<BackPanel> {
           )),
           Center(
               child: ScopedModelDescendant<FrontPanelModel>(
-            builder: (context, _, model) => FlatButton(
-                  child: Text('show first panel'),
+            rebuildOnChange: false,
+            builder: (context, _, model) => RaisedButton(
+                  color: Colors.teal,
+                  child: Text('show teal panel'),
                   onPressed: () {
-                    model.activate(FrontPanels.firstPanel);
+                    model.activate(FrontPanels.tealPanel);
                     widget.frontPanelOpen.value = true;
                   },
                 ),
           )),
           Center(
               child: ScopedModelDescendant<FrontPanelModel>(
-            builder: (context, _, model) => FlatButton(
-                  child: Text('show second panel'),
+            rebuildOnChange: false,
+            builder: (context, _, model) => RaisedButton(
+                  color: Colors.lime,
+                  child: Text('show lime panel'),
                   onPressed: () {
-                    model.activate(FrontPanels.secondPanel);
+                    model.activate(FrontPanels.limePanel);
                     widget.frontPanelOpen.value = true;
                   },
                 ),
           )),
           Center(
-              child: FlatButton(
+              child: RaisedButton(
             child: Text('show current panel'),
             onPressed: () {
               widget.frontPanelOpen.value = true;
