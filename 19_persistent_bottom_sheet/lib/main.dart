@@ -46,8 +46,8 @@ class MyHomePageState extends State<MyHomePage> {
     return Center(
       child: RaisedButton(
           child: Text(_isSheetOpen
-              ? 'Open the bottom sheet'
-              : 'Close the bottom sheet'),
+              ? 'Close the bottom sheet'
+              : 'Open the bottom sheet'),
           onPressed: () {
             // If there's no bottom sheet, create a new one
             if (!_isSheetOpen) _controller = _showBottomSheet(context);
