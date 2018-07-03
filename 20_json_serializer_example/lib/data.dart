@@ -4,11 +4,17 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'data.g.dart';
 
-@JsonSerializable(nullable: false)
+@JsonSerializable()
 class Story extends Object with _$StorySerializerMixin {
   final String title;
   final String url;
-  Story({this.title, this.url});
+  final String text;
+  @JsonKey(includeIfNull: false)
+  final int score;
+  @JsonKey(includeIfNull: false)
+  final List<int> parts;
+
+  Story({this.title, this.url, this.text, this.score, this.parts});
   factory Story.fromJson(Map<String, dynamic> json) => _$StoryFromJson(json);
 }
 
