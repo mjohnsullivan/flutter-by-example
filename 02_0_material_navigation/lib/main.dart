@@ -1,23 +1,23 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(new NavigationExampleApp());
+  runApp(NavigationExampleApp());
 }
 
 class NavigationExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // The MaterialApp's home is automatically set as the bottom of the navigation stack
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Navigation Example',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new FirstScreen(),
+      home: FirstScreen(),
     );
   }
 }
@@ -25,18 +25,18 @@ class NavigationExampleApp extends StatelessWidget {
 class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: const Text('First Screen'),
       ),
-      body: new Center(
-        child: new RaisedButton(
+      body: Center(
+        child: RaisedButton(
           child: const Text('Go to Second'),
           onPressed: () {
             // Pushs the SecondScreen widget onto the navigation stack
-            Navigator.of(context).push(new MaterialPageRoute<Null>(
-              builder: (BuildContext context) => new SecondScreen()
-            ));
+            Navigator
+                .of(context)
+                .push(MaterialPageRoute(builder: (_) => SecondScreen()));
           },
         ),
       ),
@@ -47,12 +47,12 @@ class FirstScreen extends StatelessWidget {
 class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Second Screen'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Screen'),
       ),
-      body: new Center(
-        child: new RaisedButton(
+      body: Center(
+        child: RaisedButton(
           child: const Text('Go to First'),
           // Pops Second Screen off the navigation stack
           onPressed: () => Navigator.of(context).pop(),
