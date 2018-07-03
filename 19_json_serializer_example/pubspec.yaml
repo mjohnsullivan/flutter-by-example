@@ -1,0 +1,20 @@
+name: json_serializer_example
+description: A new Flutter project.
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  http: ^0.11.3
+  json_annotation: ^0.2.4
+  url_launcher: ^3.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  build_runner: ^0.8.0
+  json_serializable: ^0.5.0
+
+flutter:
+  uses-material-design: true

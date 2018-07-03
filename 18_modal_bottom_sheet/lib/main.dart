@@ -5,6 +5,25 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+class FrogColor extends InheritedWidget {
+  const FrogColor({
+    Key key,
+    @required this.color,
+    @required Widget child,
+  })  : assert(color != null),
+        assert(child != null),
+        super(key: key, child: child);
+
+  final Color color;
+
+  static FrogColor of(BuildContext context) {
+    return context.inheritFromWidgetOfExactType(FrogColor);
+  }
+
+  @override
+  bool updateShouldNotify(FrogColor old) => color != old.color;
+}
+
 void main() => runApp(MyApp());
 
 class IncrementValueModel extends Model {
@@ -33,14 +52,17 @@ class IncrementValueModel extends Model {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return FrogColor(
+      color: Colors.lime,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: ScopedModel(
+            model: IncrementValueModel(1),
+            child: MyHomePage(title: 'Modal Bottom Sheet Demo')),
       ),
-      home: ScopedModel(
-          model: IncrementValueModel(1),
-          child: MyHomePage(title: 'Modal Bottom Sheet Demo')),
     );
   }
 }
@@ -132,6 +154,7 @@ void _modalBottomSheet(BuildContext context, IncrementValueModel model) {
 class CustomBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(FrogColor.of(context).color.toString());
     return Container(
       height: 250.0,
       child: Column(
