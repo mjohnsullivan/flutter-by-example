@@ -10,10 +10,9 @@ There's a Directionality widget, so the following also works:
 runApp(Directionality(
   textDirection: TextDirection.ltr,
   child: Center(
-    child: Text('Hello World')
+    child: const Text('Hello World')
   )
 ));
 */
-void main() {
-  runApp(Center(child: Text('Hello World!', textDirection: TextDirection.ltr)));
-}
+void main() => runApp(Center(
+    child: const Text('Hello World!', textDirection: TextDirection.ltr)));
