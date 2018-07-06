@@ -1,46 +1,54 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/widgets.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(new MyApp());
+  runApp(NetworkApp());
 }
 
-class MyApp extends StatelessWidget {
+class NetworkApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: new Padding(padding: new EdgeInsets.only(top: 50.0),
-        child: new Column(children: <Widget>[
-          new FetchTextWidget(url: 'https://api.stackexchange.com/2.2/search?intitle=flutter&site=stackoverflow'),
-          new Padding(padding: new EdgeInsets.only(top: 50.0)),
-          new FetchImageWidget(url: 'https://flutter.io/images/flutter-mark-square-100.png'),
-        ])
-      )
+    return MaterialApp(
+      home: Scaffold(body: NetworkBody()),
+    );
+  }
+}
+
+class NetworkBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Quotation(url: 'https://quotes.rest/qod.json'),
+          Padding(padding: EdgeInsets.only(top: 50.0)),
+          Image
+              .network('https://flutter.io/images/flutter-mark-square-100.png'),
+        ],
+      ),
     );
   }
 }
 
 /// The first line of a HTTP request body
-class FetchTextWidget extends StatefulWidget {
-  FetchTextWidget({Key key, this.url}) : super(key: key);
+class Quotation extends StatefulWidget {
+  Quotation({Key key, this.url}) : super(key: key);
 
   final String url;
 
   @override
-  _FetchTextState createState() => new _FetchTextState();
+  createState() => _QuotationState();
 }
 
-class _FetchTextState extends State<FetchTextWidget> {
+class _QuotationState extends State<Quotation> {
   String data = 'Loading ...';
-
-  _get() async {
-    var res = await http.get(widget.url);
-    setState(() => data = res.body);
-  }
 
   @override
   void initState() {
@@ -48,20 +56,19 @@ class _FetchTextState extends State<FetchTextWidget> {
     _get();
   }
 
+  _get() async {
+    final res = await http.get(widget.url);
+    setState(() => data = _parseQuoteFromJson(res.body));
+  }
+
+  String _parseQuoteFromJson(String jsonStr) {
+    // In the real world, this should check for errors
+    final jsonQuote = json.decode(jsonStr);
+    return jsonQuote['contents']['quotes'][0]['quote'];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Text(data, textDirection: TextDirection.ltr, overflow: TextOverflow.ellipsis);
-  }
-}
-
-/// Fetch an image over the network and add to a widget
-class FetchImageWidget extends StatelessWidget {
-  FetchImageWidget({this.url});
-
-  final String url;
-
-   @override
-  Widget build(BuildContext context) {
-    return new Image.network(url);
+    return Text(data, textAlign: TextAlign.center);
   }
 }
