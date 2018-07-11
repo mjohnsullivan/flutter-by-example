@@ -33,14 +33,15 @@ class IncrementValueModel extends Model {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ScopedModel(
+      model: IncrementValueModel(1),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(title: 'Modal Bottom Sheet Demo'),
       ),
-      home: ScopedModel(
-          model: IncrementValueModel(1),
-          child: MyHomePage(title: 'Modal Bottom Sheet Demo')),
     );
   }
 }
@@ -86,9 +87,7 @@ class MyHomePage extends StatelessWidget {
       //        ),
       //  ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          IncrementValueModel.of(context).increment();
-        },
+        onPressed: () => IncrementValueModel.of(context).increment(),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
@@ -111,7 +110,7 @@ class BottomBar extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.settings,
                       color: Theme.of(context).canvasColor),
-                  onPressed: () => _modalBottomSheet(context, model),
+                  onPressed: () => _modalBottomSheet(context),
                 ),
               ),
             ],
@@ -120,13 +119,9 @@ class BottomBar extends StatelessWidget {
   }
 }
 
-/// The model must be passed in, as ScopedModel doesn't span a ModalBottomSheet
-void _modalBottomSheet(BuildContext context, IncrementValueModel model) {
+void _modalBottomSheet(BuildContext context) {
   showModalBottomSheet(
-      context: context,
-      builder: (builder) {
-        return ScopedModel(model: model, child: CustomBottomSheet());
-      });
+      context: context, builder: (builder) => CustomBottomSheet());
 }
 
 class CustomBottomSheet extends StatelessWidget {

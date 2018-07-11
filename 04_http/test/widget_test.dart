@@ -11,7 +11,7 @@ import '../lib/main.dart';
 void main() {
   testWidgets('HTTP loads', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(new MyApp());
+    await tester.pumpWidget(NetworkApp());
     expect(find.text('Loading ...'), findsOneWidget);
     await tester.pumpAndSettle();
   });

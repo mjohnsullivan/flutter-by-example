@@ -6,18 +6,18 @@
 
 import 'package:flutter_test/flutter_test.dart';
 
-import '../lib/main.dart';
+import 'package:navigation_example/main.dart';
 
 const Duration kWaitForTransition = const Duration(milliseconds: 250);
 
 void main() {
   testWidgets('Navigating between two screens', (WidgetTester tester) async {
     // Build our app and trigger a frame
-    await tester.pumpWidget(new NavigationExampleApp());
+    await tester.pumpWidget(NavigationExampleApp());
 
     // Expect to be on the first screen
     expect(find.text('First Screen'), findsOneWidget);
-    
+
     // Tap the button to go to the next screen
     await tester.tap(find.text('Go to Second'));
     await tester.pumpAndSettle();
