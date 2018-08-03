@@ -121,14 +121,17 @@ class BottomBar extends StatelessWidget {
 
 void _modalBottomSheet(BuildContext context) {
   showModalBottomSheet(
-      context: context, builder: (builder) => CustomBottomSheet());
+    context: context,
+    builder: (_) => CustomBottomSheet(),
+    // maxHeightRatio: 0.4,
+  );
 }
 
 class CustomBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250.0,
+      // height: 600.0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
