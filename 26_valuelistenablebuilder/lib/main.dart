@@ -34,12 +34,15 @@ class _HomePageState extends State<HomePage> {
         SizedBox(height: 25),
         ComplexValue(),
         SizedBox(height: 25),
+        MoreComplexValue(),
+        SizedBox(height: 25),
         AnimationValue(),
       ],
     ));
   }
 }
 
+/// Using ValueNotifier directly to wrap a simple value
 class SimpleValue extends StatefulWidget {
   @override
   createState() => _SimpleValueState();
@@ -66,12 +69,11 @@ class _SimpleValueState extends State<SimpleValue> {
   }
 }
 
+/// Extending ValueNotifier for more complex behavior
 class ComplexValueNotifier extends ValueNotifier<String> {
   ComplexValueNotifier(String value) : super(value);
 
-  void update() {
-    value = value + '.';
-  }
+  void addDot() => value = value + '.';
 }
 
 class ComplexValue extends StatefulWidget {
@@ -93,13 +95,57 @@ class _ComplexValueState extends State<ComplexValue> {
             }),
         FlatButton(
           child: Text('Click me'),
-          onPressed: () => _complexValue.update(),
+          onPressed: () => _complexValue.addDot(),
         )
       ],
     );
   }
 }
 
+/// If the value itself doesn't directly change, call notifyListeners()
+class Counter {
+  Counter(this.count);
+  int count;
+  void increment() => count++;
+}
+
+class MoreComplexValueNotifier extends ValueNotifier<Counter> {
+  MoreComplexValueNotifier(Counter value) : super(value);
+
+  void addTwo() {
+    value.increment();
+    value.increment();
+    notifyListeners();
+  }
+}
+
+class MoreComplexValue extends StatefulWidget {
+  @override
+  createState() => _MoreComplexValueState();
+}
+
+class _MoreComplexValueState extends State<MoreComplexValue> {
+  final _moreComplexValue = MoreComplexValueNotifier(Counter(0));
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ValueListenableBuilder(
+            valueListenable: _moreComplexValue,
+            builder: (context, value, _) {
+              return Text(value.count.toString());
+            }),
+        FlatButton(
+          child: Text('Click me'),
+          onPressed: () => _moreComplexValue.addTwo(),
+        )
+      ],
+    );
+  }
+}
+
+/// There are many notifiers in Flutter; animation is one of them
 class AnimationValue extends StatefulWidget {
   @override
   createState() => _AnimationValueState();
