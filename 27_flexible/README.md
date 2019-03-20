@@ -1,6 +1,6 @@
-# flexible_ex
+# Flexible Widget Example
 
-A new Flutter project.
+A simple example using Flexible to lay out widgets in Rows, Columns and Flexes.
 
 ## Getting Started
 
