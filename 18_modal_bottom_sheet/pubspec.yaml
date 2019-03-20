@@ -1,11 +1,14 @@
 name: modal
-description: A new Flutter project.
+description: An example of using modal bottom sheets
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  scoped_model: ^0.2.0
+  provider: ^1.6.1
 
 dev_dependencies:
   flutter_test:
