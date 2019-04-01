@@ -1,5 +1,8 @@
-import 'dart:math' show Random;
+// Copyright 2019 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
+import 'dart:math' show Random;
 import 'package:flutter/material.dart';
 
 void main() => runApp(MySliverApp());
@@ -20,9 +23,37 @@ class MySliverPage extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          title: Text('This is a magical disappearing app bar'),
           snap: true,
           floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Icon(Icons.menu, color: Colors.white),
+              const SizedBox(width: 10),
+              const Text('Expando Bar'),
+            ]),
+            background: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [Colors.green, Colors.red])),
+            ),
+          ),
+          expandedHeight: 150,
+        ),
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => Container(
+                  color: getRandomColor(),
+                ),
+            childCount: 99,
+          ),
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 50,
+            mainAxisSpacing: 0,
+            crossAxisSpacing: 0,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+              height: 50, child: Center(child: Text('I am a regular widget'))),
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
