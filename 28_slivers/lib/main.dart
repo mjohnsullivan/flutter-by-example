@@ -26,17 +26,26 @@ class MySliverPage extends StatelessWidget {
           snap: true,
           floating: true,
           flexibleSpace: FlexibleSpaceBar(
-            title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Icon(Icons.menu, color: Colors.white),
-              const SizedBox(width: 10),
-              const Text('Expando Bar'),
-            ]),
+            title: Row(
+              children: [
+                const Icon(Icons.menu, color: Colors.white),
+                const SizedBox(width: 10),
+                const Text('Expando Bar'),
+              ],
+            ),
             background: Container(
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [Colors.green, Colors.red])),
             ),
           ),
           expandedHeight: 150,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.mode_comment),
+              onPressed: () => Scaffold.of(context)
+                  .showSnackBar(SnackBar(content: Text('I have been pressed'))),
+            )
+          ],
         ),
         SliverGrid(
           delegate: SliverChildBuilderDelegate(
@@ -53,7 +62,12 @@ class MySliverPage extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: Container(
-              height: 50, child: Center(child: Text('I am a regular widget'))),
+              height: 50, child: Center(child: Text('I\'m a regular widget'))),
+        ),
+        SliverAppBar(
+          title: Text('I\'m a sticky app bar'),
+          pinned: true,
+          primary: false,
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
