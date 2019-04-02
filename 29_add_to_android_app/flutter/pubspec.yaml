@@ -1,4 +1,4 @@
-name: add_to_app
+name: add_flutter_to_android
 description: A new flutter module project.
 
 # The following defines the version and build number for your application.
@@ -81,5 +81,5 @@ flutter:
   # They also do not have any bearing on your native host application's
   # identifiers, which may be completely independent or the same as these.
   module:
-    androidPackage: com.example.add_to_app
-    iosBundleIdentifier: com.example.addToApp
+    androidPackage: com.example.add_flutter_to_android
+    iosBundleIdentifier: com.example.addFlutterToAndroid

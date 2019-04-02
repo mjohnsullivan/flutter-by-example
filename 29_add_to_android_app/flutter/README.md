@@ -1,4 +1,4 @@
-# add_to_app
+# add_flutter_to_android
 
 A new flutter module project.
 
