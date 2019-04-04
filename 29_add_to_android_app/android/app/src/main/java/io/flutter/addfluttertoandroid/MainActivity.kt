@@ -15,14 +15,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.view.*
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterView
-import io.flutter.embedding.engine.FlutterShellArgs
-import io.flutter.plugins.GeneratedPluginRegistrant
 
 
 class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        // removeAllFragments()
         when (item.itemId) {
             R.id.navigation_home -> {
                 addFragment(null, "I am an Android Fragment!!!")
@@ -116,11 +113,13 @@ class AndroidFragment : Fragment() {
 class MyFlutterFragment : FlutterFragment() {
 
     companion object {
-        fun newInstance(): FlutterFragment {
-            val fragment = MyFlutterFragment()
-            fragment.arguments = FlutterFragment.createArgsBundle(null, null, null, null, null)
-            return fragment
-        }
+        @JvmStatic
+        fun newInstance() =
+            MyFlutterFragment().apply {
+                arguments = FlutterFragment.createArgsBundle(
+                    null, null,
+                    null, null, FlutterView.RenderMode.texture)
+            }
     }
 
     override fun onCreateFlutterEngine(@NonNull context: Context): FlutterEngine {
