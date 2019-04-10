@@ -3,7 +3,6 @@ package io.flutter.addfluttertoandroid
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.NonNull
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -17,7 +16,14 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterView
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FlutterFragment.FlutterEngineProvider {
+
+    // TODO: Remove in preference of injecting engine in the Flutter Fragment
+    override fun getFlutterEngine(context: Context): FlutterEngine? {
+        val app = context.applicationContext as MyApplication
+        return app.engine //To change body of created functions use File | Settings | File Templates.
+    }
+
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -118,24 +124,26 @@ class MyFlutterFragment : FlutterFragment() {
             MyFlutterFragment().apply {
                 arguments = FlutterFragment.createArgsBundle(
                     null, null,
-                    null, null, FlutterView.RenderMode.texture)
+                    null, null, FlutterView.RenderMode.texture, // or texture
+                    FlutterView.TransparencyMode.transparent)
             }
     }
 
-    override fun onCreateFlutterEngine(@NonNull context: Context): FlutterEngine {
+    /*
+    override fun setupFlutterEngine(@NonNull context: Context): FlutterEngine {
         val app = context.applicationContext as MyApplication
         return app.engine
     }
+    */
 
-    override fun retainFlutterIsolateAfterFragmentDestruction() : Boolean {
-        return true
-    }
+    override fun retainFlutterEngineAfterFragmentDestruction() = true
 }
 
-class MyFlutterActivity : FlutterActivity() {
+class MyFlutterActivity : FlutterActivity(), FlutterFragment.FlutterEngineProvider {
 
-    override fun createFlutterFragment(): FlutterFragment {
-        return MyFlutterFragment()
+    override fun getFlutterEngine(context: Context): FlutterEngine? {
+        val app = context.applicationContext as MyApplication
+        return app.engine//To change body of created functions use File | Settings | File Templates.
     }
 
 }

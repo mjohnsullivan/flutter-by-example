@@ -11,7 +11,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         FlutterMain.startInitialization(applicationContext)
-        FlutterMain.ensureInitializationComplete(this, arrayOf<String>())
+        FlutterMain.ensureInitializationComplete(applicationContext, arrayOf<String>())
         engine = FlutterEngine(this)
         val entryPoint = DartExecutor.DartEntrypoint(this.assets,
             FlutterMain.findAppBundlePath(this), "main")
