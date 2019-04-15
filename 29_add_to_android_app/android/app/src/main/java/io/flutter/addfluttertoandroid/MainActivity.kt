@@ -3,6 +3,7 @@ package io.flutter.addfluttertoandroid
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.NonNull
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -16,13 +17,13 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterView
 
 
-class MainActivity : AppCompatActivity(), FlutterFragment.FlutterEngineProvider {
+class MainActivity : AppCompatActivity() {
 
-    // TODO: Remove in preference of injecting engine in the Flutter Fragment
-    override fun getFlutterEngine(context: Context): FlutterEngine? {
-        val app = context.applicationContext as MyApplication
-        return app.engine //To change body of created functions use File | Settings | File Templates.
-    }
+//    // TODO: Remove in preference of injecting engine in the Flutter Fragment
+//    override fun getFlutterEngine(context: Context): FlutterEngine? {
+//        val app = context.applicationContext as MyApplication
+//        return app.engine //To change body of created functions use File | Settings | File Templates.
+//    }
 
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -116,25 +117,34 @@ class AndroidFragment : Fragment() {
     }
 }
 
+//class MyFlutterFragmentBuilder : FlutterFragment.Builder(MyFlutterFragment.javaClass) {
+//
+//    override fun createFragment(): FlutterFragment {
+//        return MyFlutterFragment()
+//    }
+//}
+
 class MyFlutterFragment : FlutterFragment() {
 
     companion object {
         @JvmStatic
         fun newInstance() =
             MyFlutterFragment().apply {
-                arguments = FlutterFragment.createArgsBundle(
-                    null, null,
-                    null, null, FlutterView.RenderMode.texture, // or texture
-                    FlutterView.TransparencyMode.transparent)
+                return FlutterFragment.Builder(MyFlutterFragment::class.java)
+                    .renderMode(FlutterView.RenderMode.texture)
+                    .transparencyMode(FlutterView.TransparencyMode.transparent)
+                    .build<MyFlutterFragment>()
+//                arguments = FlutterFragment.createArgsBundle(
+//                    null, null,
+//                    null, null, FlutterView.RenderMode.texture, // or texture
+//                    FlutterView.TransparencyMode.transparent)
             }
     }
 
-    /*
-    override fun setupFlutterEngine(@NonNull context: Context): FlutterEngine {
+    override fun createFlutterEngine(@NonNull context: Context): FlutterEngine {
         val app = context.applicationContext as MyApplication
         return app.engine
     }
-    */
 
     override fun retainFlutterEngineAfterFragmentDestruction() = true
 }
