@@ -4,25 +4,16 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MyFragment());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Add 2 App Demo',
-      home: MyFragmentPage(),
+      home: Scaffold(
+          body: Center(
+        child: Text('I am a Flutter-Rendered Fragment!!!'),
+      )),
     );
-  }
-}
-
-class MyFragmentPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Text('I am a Flutter Fragment!!!'),
-    ));
   }
 }
