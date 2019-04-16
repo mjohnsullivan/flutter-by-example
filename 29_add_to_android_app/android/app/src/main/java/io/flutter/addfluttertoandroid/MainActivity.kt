@@ -1,3 +1,7 @@
+// Copyright 2019 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 package io.flutter.addfluttertoandroid
 
 import android.content.Context
@@ -19,21 +23,14 @@ import io.flutter.embedding.android.FlutterView
 
 class MainActivity : AppCompatActivity() {
 
-//    // TODO: Remove in preference of injecting engine in the Flutter Fragment
-//    override fun getFlutterEngine(context: Context): FlutterEngine? {
-//        val app = context.applicationContext as MyApplication
-//        return app.engine //To change body of created functions use File | Settings | File Templates.
-//    }
-
-
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                addFragment(null, "I am an Android Fragment!!!")
+                addFragment("I am an Android Fragment!!!")
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                addFragment(null, "I am a second Android Fragment!!!")
+                addFragment("I am a second Android Fragment!!!")
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
@@ -46,10 +43,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // setContentView(R.layout.activity_main)
-        setContentView(R.layout.activity_main)
-        addFragment(null, "I am an Android Fragment!!!")
-
+        setContentView(R.layout.activity_main_linear)
+        addFragment("I am an Android Fragment!!!")
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
@@ -64,20 +59,17 @@ class MainActivity : AppCompatActivity() {
             launchFlutterActivity()
             true
         }
-
         else -> {
             super.onOptionsItemSelected(item)
         }
     }
 
-    private fun addFragment(savedInstanceState: Bundle?, text: String) {
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container,
-                    AndroidFragment.newInstance(text))
-                .commit()
-        }
+    private fun addFragment(text: String) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container,
+                AndroidFragment.newInstance(text))
+            .commit()
     }
 
 
@@ -88,11 +80,10 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun launchFlutterActivity() {
+    private fun launchFlutterActivity() =
         startActivity(Intent(this, MyFlutterActivity::class.java))
-    }
-}
 
+}
 
 class AndroidFragment : Fragment() {
 
@@ -118,13 +109,6 @@ class AndroidFragment : Fragment() {
     }
 }
 
-//class MyFlutterFragmentBuilder : FlutterFragment.Builder(MyFlutterFragment.javaClass) {
-//
-//    override fun createFragment(): FlutterFragment {
-//        return MyFlutterFragment()
-//    }
-//}
-
 class MyFlutterFragment : FlutterFragment() {
 
     companion object {
@@ -132,29 +116,22 @@ class MyFlutterFragment : FlutterFragment() {
         fun newInstance() =
             MyFlutterFragment().apply {
                 return FlutterFragment.Builder(MyFlutterFragment::class.java)
-                    .renderMode(FlutterView.RenderMode.texture)
+                    .renderMode(FlutterView.RenderMode.surface)
                     .transparencyMode(FlutterView.TransparencyMode.transparent)
                     .build<MyFlutterFragment>()
-//                arguments = FlutterFragment.createArgsBundle(
-//                    null, null,
-//                    null, null, FlutterView.RenderMode.texture, // or texture
-//                    FlutterView.TransparencyMode.transparent)
             }
     }
 
-    override fun createFlutterEngine(@NonNull context: Context): FlutterEngine {
-        val app = context.applicationContext as MyApplication
-        return app.engine
-    }
+    override fun createFlutterEngine(@NonNull context: Context): FlutterEngine =
+         (context.applicationContext as MyApplication).engine
+
 
     override fun retainFlutterEngineAfterFragmentDestruction() = true
 }
 
 class MyFlutterActivity : FlutterActivity(), FlutterFragment.FlutterEngineProvider {
 
-    override fun getFlutterEngine(context: Context): FlutterEngine? {
-        val app = context.applicationContext as MyApplication
-        return app.engine//To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getFlutterEngine(context: Context): FlutterEngine? =
+        (context.applicationContext as MyApplication).engine
 
 }
