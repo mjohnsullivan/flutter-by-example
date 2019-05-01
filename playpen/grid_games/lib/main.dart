@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 void main() => runApp(MyApp());
@@ -9,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WidgetsApp(
-      color: Colors.grey,
+      color: Color(0xFFFFFFFF),
       builder: (context, _) => GridPage(),
     );
   }
@@ -37,9 +36,9 @@ class MyGrid extends StatelessWidget {
 
     for (var i = 15; i >= 0; i--) {
       if ((word >> i) & 0x1 == 0x1) {
-        pixels.add(Container(color: Colors.yellow));
+        pixels.add(Container(color: Color(0xFFFFFF00)));
       } else {
-        pixels.add(Container(color: Colors.transparent));
+        pixels.add(Container(color: Color(0x00000000)));
       }
     }
     return pixels;
