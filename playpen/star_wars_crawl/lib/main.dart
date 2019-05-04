@@ -17,18 +17,13 @@ final textStyle = TextStyle(
   fontSize: 24,
 );
 
-final textStyleHeader = TextStyle(
-  color: yellow,
-  fontSize: 48,
-);
-
 final crawlString1 = """
 Lorem ipsum dolor sit amet, in sea illud veritus suavitate, mutat ullum ut pro. Fabulas accusata cu ius, nec an quem vituperatoribus, ex mel doctus splendide. Eam habeo fabellas ne, principes reprimique sea ad. Et vim scaevola accommodare. Vim ad eius adhuc homero. Maiestatis elaboraret ei nam.
 
 An usu fugit recteque ullamcorper, ea eos essent molestiae reprimique. Vocibus instructior ne nec. Justo reprehendunt ut has, vel ea clita signiferumque. Sale disputationi ut quo.
 """;
 final crawlString2 = """
-Cum nibh assentior tincidunt ad. Mei te accusam convenire partiendo, facilisi expetenda inciderint ei has. Falli corrumpit an per, no vis vidisse accusata, nibh noster dolores sea ex. Singulis accusamus at cum, tation aliquip mediocritatem duo et. Ei mel suas argumentum, pri no purto ignota quaerendum.
+\nCum nibh assentior tincidunt ad. Mei te accusam convenire partiendo, facilisi expetenda inciderint ei has. Falli corrumpit an per, no vis vidisse accusata, nibh noster dolores sea ex. Singulis accusamus at cum, tation aliquip mediocritatem duo et. Ei mel suas argumentum, pri no purto ignota quaerendum.
 """;
 
 class MyApp extends StatelessWidget {
@@ -70,26 +65,14 @@ class _CrawlerState extends State<Crawler> {
 
   @override
   void initState() {
-    Timer(const Duration(milliseconds: 100), () {
-      _scrollController.animateTo(
-          1900, // _scrollController.position.maxScrollExtent,
-          duration: widget.crawlDuration,
-          curve: Curves.linear);
-    });
+    Future.delayed(
+        const Duration(milliseconds: 500),
+        () => _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: widget.crawlDuration,
+            curve: Curves.linear));
+
     super.initState();
-  }
-
-  void scrollForward() =>
-      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-          duration: widget.crawlDuration, curve: Curves.linear);
-
-  void scrollBackward() async {
-    print('Starting scroll backward');
-    await _scrollController.animateTo(
-        _scrollController.position.minScrollExtent,
-        duration: widget.crawlDuration,
-        curve: Curves.linear);
-    print('Scrolling done');
   }
 
   @override
@@ -97,42 +80,23 @@ class _CrawlerState extends State<Crawler> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    return NotificationListener<ScrollStartNotification>(
-      onNotification: (start) {
-        print('Scroll started');
-      },
-      child: NotificationListener<ScrollEndNotification>(
-        onNotification: (end) {
-          print('Scroll completed');
-          print(_scrollController.position.pixels);
-          print(_scrollController.position.maxScrollExtent);
-          print(_scrollController.position.minScrollExtent);
-          /*
-          if (_scrollController.position.pixels ==
-              _scrollController.position.maxScrollExtent) scrollBackward();
-          if (_scrollController.position.pixels ==
-              _scrollController.position.minScrollExtent) scrollForward();
-          */
-        },
-        child: ListView(
-          controller: _scrollController,
-          children: [
-            SizedBox(height: height),
-            Text(
-              crawlString1,
-              style: textStyle,
-              textAlign: TextAlign.center,
-            ),
-            FlutterLogo(size: width / 2),
-            Text(
-              crawlString2,
-              style: textStyle,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: height),
-          ],
+    return ListView(
+      controller: _scrollController,
+      children: [
+        SizedBox(height: height),
+        Text(
+          crawlString1,
+          style: textStyle,
+          textAlign: TextAlign.center,
         ),
-      ),
+        FlutterLogo(size: width / 1.5),
+        Text(
+          crawlString2,
+          style: textStyle,
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: height),
+      ],
     );
   }
 }
