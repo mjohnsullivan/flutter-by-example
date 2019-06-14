@@ -7,11 +7,40 @@ final boxPixels = [
   for (int y = 0; y <= 7; y++) Pixel(7, y, 0xFFFFFF),
 ];
 
+final flutterLightBlue = 0x0000FF;
+final flutterMediumBlue = 0x3333FF;
+final flutterDarkBlue = 0x6666FF;
+
+final flutterLogo = [
+  Pixel(0, 3, flutterLightBlue),
+  Pixel(0, 4, flutterLightBlue),
+  Pixel(1, 2, flutterLightBlue),
+  Pixel(1, 3, flutterLightBlue),
+  Pixel(2, 1, flutterLightBlue),
+  Pixel(2, 2, flutterLightBlue),
+  Pixel(3, 0, flutterLightBlue),
+  Pixel(3, 1, flutterLightBlue),
+  Pixel(3, 3, flutterLightBlue),
+  Pixel(3, 4, flutterLightBlue),
+  Pixel(4, 0, flutterLightBlue),
+  Pixel(4, 1, flutterLightBlue),
+  Pixel(4, 3, flutterLightBlue),
+  Pixel(4, 4, flutterLightBlue),
+  Pixel(5, 1, flutterMediumBlue),
+  Pixel(5, 2, flutterMediumBlue),
+  Pixel(5, 3, flutterMediumBlue),
+  Pixel(6, 2, flutterDarkBlue),
+  Pixel(6, 3, flutterDarkBlue),
+  Pixel(7, 3, flutterDarkBlue),
+  Pixel(7, 4, flutterDarkBlue),
+];
+
 main() {
   // Zero out the test device file
   //File('test.bin').writeAsBytes(List.generate(64 * 2, (i) => 0));
   final buffer = FrameBuffer('test.bin');
-  buffer.setPixels(boxPixels);
+  buffer.resetPixels();
+  buffer.setPixels(flutterLogo);
   // buffer.setPixel(1, 7, 255, 255, 255);
 }
 
@@ -29,9 +58,13 @@ class FrameBuffer {
     writer.closeSync();
   }
 
+  void resetPixels() async {
+    await setPixels(List.generate(64, (i) => Pixel(i % 8, (i ~/ 8), 0x000000)));
+  }
+
   void _setPixel(Pixel pixel, RandomAccessFile deviceFile) {
     final bytes = _createColourBytes(pixel.rgb);
-    deviceFile.setPositionSync(((pixel.y * 8) + pixel.x) * 2);
+    deviceFile.setPositionSync(((pixel.x * 8) + pixel.y) * 2);
     deviceFile.writeFromSync([upperByte(bytes), lowerByte(bytes)]);
   }
 
