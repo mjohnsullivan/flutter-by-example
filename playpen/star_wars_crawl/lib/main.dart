@@ -80,23 +80,41 @@ class _CrawlerState extends State<Crawler> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    return ListView(
-      controller: _scrollController,
-      children: [
-        SizedBox(height: height),
-        Text(
-          crawlString1,
-          style: textStyle,
-          textAlign: TextAlign.center,
-        ),
-        FlutterLogo(size: width / 1.5),
-        Text(
-          crawlString2,
-          style: textStyle,
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: height),
-      ],
+    return SuperSize(
+      height: 1279,
+      child: ListView(
+        controller: _scrollController,
+        children: [
+          SizedBox(height: height),
+          Text(
+            crawlString1,
+            style: textStyle,
+            textAlign: TextAlign.center,
+          ),
+          FlutterLogo(size: width / 1.5),
+          Text(
+            crawlString2,
+            style: textStyle,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: height),
+        ],
+      ),
+    );
+  }
+}
+
+class SuperSize extends StatelessWidget {
+  SuperSize({this.child, this.height = 1000});
+  final Widget child;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return OverflowBox(
+      minHeight: height,
+      maxHeight: height,
+      child: child,
     );
   }
 }
