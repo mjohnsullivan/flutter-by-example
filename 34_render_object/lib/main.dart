@@ -3,22 +3,27 @@
 // found in the LICENSE file.
 
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-void main() => runApp(
-      Bottom(
-        child: RichText(
-          text: TextSpan(
-            text: 'Hello World',
-            style: TextStyle(
-              fontSize: 48,
-              color: Color(0xFFFFFFFF),
-            ),
+void main() {
+  SystemChrome.setEnabledSystemUIOverlays([]);
+
+  runApp(
+    Bottom(
+      child: RichText(
+        text: TextSpan(
+          text: '你好，世界',
+          style: TextStyle(
+            fontSize: 48,
+            color: Color(0xFFFFFFFF),
           ),
-          textDirection: TextDirection.ltr,
         ),
+        textDirection: TextDirection.ltr,
       ),
-    );
+    ),
+  );
+}
 
 /// A typical way for creating layout widgets; use
 /// StatelessWidget and the framework layout widgets
