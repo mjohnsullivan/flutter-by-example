@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 void main() => runApp(
-      Bottom(
+      BottomAsYouShouldWriteIt(
         child: RichText(
           text: TextSpan(
             text: 'Hello World',
