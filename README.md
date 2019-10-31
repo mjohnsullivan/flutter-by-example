@@ -1,7 +1,8 @@
 # flutter-by-example
-A collection of simple, bare-bones Flutter apps that each demonstrate a concept
 
-The apps are slowly being updated to Dart 2; be sure to use the __--preview-dart-2__ flag when running/compiling these examples
+A collection of simple, bare-bones Flutter apps that each demonstrate a concept.
+
+The apps are slowly being updated to Dart 2; be sure to use the __--preview-dart-2__ flag when running/compiling these examples.
 
 ## Apps
 
