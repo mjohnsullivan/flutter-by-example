@@ -1,4 +1,12 @@
+// Copyright 2020 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+import 'dart:async';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -65,8 +73,52 @@ class MyHomePage extends StatelessWidget {
                     ).createShader(bounds),
                 child: const FlutterLogo(size: 100)),
           ),
+          GrainyLogo(),
         ],
       ),
     );
+  }
+}
+
+class GrainyLogo extends StatefulWidget {
+  @override
+  _GrainyLogoState createState() => _GrainyLogoState();
+}
+
+class _GrainyLogoState extends State<GrainyLogo> {
+  Future<ui.Image> rawImage;
+
+  @override
+  void initState() {
+    super.initState();
+    rawImage = _loadImage();
+  }
+
+  /// Loads a raw image from assets
+  Future<ui.Image> _loadImage() async {
+    final imageBytes = await rootBundle.load('assets/texture.png');
+    return decodeImageFromList(imageBytes.buffer.asUint8List());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var matrix = Matrix4.identity();
+    matrix.scale(0.1, 0.1, 0.1);
+
+    return FutureBuilder(
+        future: rawImage,
+        builder: (context, AsyncSnapshot<ui.Image> image) {
+          return (image.hasData)
+              ? ShaderMask(
+                  shaderCallback: (bounds) => ImageShader(
+                        image.data,
+                        TileMode.mirror,
+                        TileMode.mirror,
+                        matrix.storage,
+                      ),
+                  blendMode: BlendMode.srcATop,
+                  child: const FlutterLogo(size: 100))
+              : Container();
+        });
   }
 }
