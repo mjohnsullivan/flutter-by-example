@@ -1,3 +1,7 @@
+// Copyright 2020 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -21,12 +25,12 @@ class GesturesHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       GestureDetector(
-        onTap: () => Scaffold.of(context).showSnackBar(SnackBar(
-            content: const Text('Blue Tapped'),
-            duration: const Duration(milliseconds: 500))),
-        onDoubleTap: () => Scaffold.of(context).showSnackBar(SnackBar(
-            content: const Text('Blue Double Tapped'),
-            duration: const Duration(milliseconds: 500))),
+        onTap: () => Scaffold.of(context).showSnackBar(const SnackBar(
+            content: Text('Blue Tapped'),
+            duration: Duration(milliseconds: 500))),
+        onDoubleTap: () => Scaffold.of(context).showSnackBar(const SnackBar(
+            content: Text('Blue Double Tapped'),
+            duration: Duration(milliseconds: 500))),
         child: Container(
           height: 200,
           color: Colors.blue,
@@ -37,16 +41,15 @@ class GesturesHomePage extends StatelessWidget {
       ),
       GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () => Scaffold.of(context).showSnackBar(SnackBar(
-              content: const Text('Tapped'),
-              duration: const Duration(milliseconds: 500))),
+          onTap: () => Scaffold.of(context).showSnackBar(const SnackBar(
+              content: Text('Tapped'), duration: Duration(milliseconds: 500))),
           child: Container(
               height: 200,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Flexible(flex: 1, child: Center(child: Text('Tap Me'))),
-                  Flexible(flex: 1, child: Center(child: Text('Tap Me'))),
+                  const Flexible(flex: 1, child: Center(child: Text('Tap Me'))),
+                  const Flexible(flex: 1, child: Center(child: Text('Tap Me'))),
                 ],
               ))),
     ]);
