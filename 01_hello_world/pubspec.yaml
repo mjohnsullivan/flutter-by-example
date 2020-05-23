@@ -1,5 +1,6 @@
 name: hello_world
 description: A bare-bones hello world app
+version: 1.0.0
 
 dependencies:
   flutter:

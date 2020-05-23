@@ -9,19 +9,25 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('"Hello world!" is shown', (WidgetTester tester) async {
-    await tester.pumpWidget(const Center(
-        child: const Text('Hello World!', textDirection: TextDirection.ltr)));
+    await tester.pumpWidget(
+      const Center(
+        child: const Text('Hello World!', textDirection: TextDirection.ltr),
+      ),
+    );
 
     // Expect "Hello World!" to be displayed
     expect(find.text('Hello World!'), findsOneWidget);
   });
 
-  testWidgets('A dummy test', (WidgetTester tester) async {
-    await tester.pumpWidget(const Center(
+  testWidgets('"Hello World!" is not shown', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const Center(
         child:
-            const Text('Hello More World!', textDirection: TextDirection.ltr)));
+            const Text('Hello More World!', textDirection: TextDirection.ltr),
+      ),
+    );
 
     // Expect "Hello World!" to be displayed
-    expect(find.text('Hello More World!'), findsOneWidget);
+    expect(find.text('Hello World!'), findsNothing);
   });
 }
