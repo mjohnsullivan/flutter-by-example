@@ -55,7 +55,7 @@ class _NamePageState extends State<NamePage> {
   // Fetch a name asynchonously over HTTP
   _get() async {
     var res = await http.get('https://jsonplaceholder.typicode.com/users');
-    var name = JSON.decode(res.body)[0]['name'];
+    var name = json.decode(res.body)[0]['name'];
     setState(() => this.name = name);
   }
 
