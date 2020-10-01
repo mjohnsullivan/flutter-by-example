@@ -25,7 +25,8 @@ The apps are slowly being updated to Dart 2; be sure to use the __--preview-dart
 13. __Bottom Nav Bar__: Simple bottom nav bar implementation, using Stack and OffStage
 14. __Custom Painter__: implements a basic bar chart using a custom painter
 15. __Tabs__: tabbed pages demo
-
+16. _Flutter Firebase : Code https://github.com/Awaisoop/Firebaseauth
+complete firebase auth solution with beutifull ui
 ## Flutter Docs
 
 For help getting started with Flutter, view Flutter's online
